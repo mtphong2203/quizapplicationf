@@ -1,0 +1,15 @@
+.container {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem 0;
+}
+
+fa-icon {
+  margin-right: 0.4rem;
+}
+.nav-link {
+  color: rgb(16, 250, 250);
+}
+
+.nav-link:hover {
+  color: rgb(34, 228, 228);
+}
