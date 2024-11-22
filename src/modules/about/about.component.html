@@ -1,0 +1,52 @@
+<div class="container w-[75%] m-auto mt-2">
+  <div class="body flex justify-between items-center">
+    <div class="body-content w-[60%]">
+      <h3 class="text-3xl font-bold mb-2">Welcome to Quiz App</h3>
+      <p class="mb-2">
+        I've learn about front-end in so long , but this is my first time in
+        doing a project by angular framework . This framework is so amazing!
+      </p>
+      <h4 class="text-2xl font-medium">Contact</h4>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+          <a href="mailto: tienphong2203@gmail.com" class="nav-link">
+            tienphong2203&#64;gmail.com
+          </a>
+        </li>
+        <li class="nav-item">
+          <fa-icon [icon]="faPhone"></fa-icon>
+          <a href="tel: 84 567 867" class="nav-link">+ 84 567 895</a>
+        </li>
+        <li class="nav-item">
+          <fa-icon [icon]="faMap"></fa-icon>
+          <a [routerLink]="['/']" class="nav-link">
+            Đông Hạ, Đông Yên, Quốc Oai, Hà Nội
+          </a>
+        </li>
+      </ul>
+    </div>
+    <img [src]="homeQuiz" class="w-96 h-auto" alt="Home Quiz" />
+  </div>
+
+  <div class="members">
+    <h3 class="text-center text-3xl font-medium mb-4">Our Team</h3>
+    <div class="member-group flex justify-between items-center">
+      <div class="member-item w-[350px] text-center border-2 rounded-md">
+        <img [src]="member01" class="w-full h-[50%]" alt="" />
+        <h4 title="name" class="font-medium text-lg">John Doe</h4>
+        <p class="font-light mb-2">Front End Developer</p>
+      </div>
+      <div class="member-item w-[350px] text-center border-2 rounded-md">
+        <img [src]="member02" class="w-full h-[50%]" alt="" />
+        <h4 title="name" class="font-medium text-lg">Jane Doe</h4>
+        <p class="font-light mb-2">Back End Developer</p>
+      </div>
+      <div class="member-item w-[350px] text-center border-2 rounded-md">
+        <img [src]="member03" class="w-full h-[50%]" alt="" />
+        <h4 title="name" class="font-medium text-lg">John Smith</h4>
+        <p class="font-light mb-2">Full Stack Developer</p>
+      </div>
+    </div>
+  </div>
+</div>
