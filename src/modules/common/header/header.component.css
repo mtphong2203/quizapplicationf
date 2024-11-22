@@ -1,0 +1,7 @@
+.nav-link {
+  padding: 0.8rem;
+}
+
+.nav-link:hover {
+  font-weight: 600;
+}
