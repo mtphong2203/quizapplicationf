@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { FormatterPipe } from '../../pipes/formatter.pipe';
 
 @Component({
   selector: 'app-quiz',
   standalone: true,
-  imports: [],
+  imports: [FormatterPipe],
   templateUrl: './quiz.component.html',
   styleUrl: './quiz.component.css'
 })

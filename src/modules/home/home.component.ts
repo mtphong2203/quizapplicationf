@@ -21,13 +21,13 @@ export class HomeComponent {
     {
       image: './assets/images/inventions.png',
       title: 'Capitals of Country',
-      time: 15,
+      time: 90,
       description: 'Test your knowledge of country capitals'
     },
     {
       image: './assets/images/map.jpeg',
       title: 'Capitals of Country',
-      time: 15,
+      time: 5690,
       description: 'Test your knowledge of country capitals'
     }
   ]

@@ -3,7 +3,7 @@
   <div class="content p-4">
     <div class="quiz-title flex justify-between mb-2">
       <h3 class="font-medium text-lg">{{ quizItem.title }}</h3>
-      <p class="text-gray-300">{{ quizItem.time }}</p>
+      <p class="text-gray-300">{{ quizItem.time | formatter }}</p>
     </div>
     <p class="mb-4">{{ quizItem.description }}</p>
     <button class="text-center rounded-md">Start</button>
