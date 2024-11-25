@@ -3,8 +3,19 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
+import { QuizComponent } from '../common/quiz/quiz.component';
+import { ContactComponent } from './contact/contact.component';
+import { QuizzesComponent } from './quizzes/quizzes.component';
 
 const routes: Routes = [
+  {
+    path: 'quizzes',
+    component: QuizzesComponent
+  },
+  {
+    path: 'contact',
+    component: ContactComponent
+  },
   {
     path: 'about',
     component: AboutComponent
@@ -12,7 +23,13 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
+
 ]
 
 
