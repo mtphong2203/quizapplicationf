@@ -12,7 +12,7 @@
         <li class="nav-item">
           <a [routerLink]="['/quizzes']" class="nav-link">Quizzes</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="currentPage != ''">
           <a [routerLink]="['/manager']" class="nav-link">Management</a>
         </li>
         <li class="nav-item">
@@ -23,9 +23,14 @@
         </li>
       </ul>
     </nav>
-    <div class="profile flex">
+    <div class="profile flex" *ngIf="currentPage == ''">
       <a [routerLink]="['/auth/login']" class="nav-link">Login</a>
       <a [routerLink]="['/auth/register']" class="nav-link">Register</a>
+    </div>
+    <div class="user-login" *ngIf="currentPage != ''">
+      <a [routerLink]="['/user']">
+        <img [src]="logoUser" class="w-8 h-8" alt="Logo User" />
+      </a>
     </div>
   </div>
 </header>
