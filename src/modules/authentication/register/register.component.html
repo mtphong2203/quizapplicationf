@@ -1,0 +1,99 @@
+<div class="min-w-[400px] h-[550px] border-2 bg-slate-100 rounded-md p-6">
+  <h3 class="text-2xl text-center font-medium">Register</h3>
+  <form class="register mt-4" [formGroup]="registerForm">
+    <div class="form-group flex justify-between items-center gap-3">
+      <div class="form-item">
+        <label for="firstName">FirstName</label>
+        <input
+          type="text"
+          name="firstName"
+          id="firstName"
+          formControlName="firstname"
+          placeholder="Enter your first name"
+        />
+      </div>
+      <div class="form-item">
+        <label for="lastName">LastName</label>
+        <input
+          type="text"
+          name="lastName"
+          id="lastName"
+          formControlName="lastname"
+          placeholder="Enter your last name"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        formControlName="email"
+        placeholder="Enter your email"
+      />
+    </div>
+    <div class="form-group flex justify-between items-center gap-3">
+      <div class="form-item">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          formControlName="username"
+          placeholder="Enter user name"
+        />
+      </div>
+      <div class="form-item">
+        <label for="phone">Phone Number</label>
+        <input
+          type="text"
+          name="phone"
+          id="phone"
+          formControlName="phone"
+          placeholder="Enter phone number"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        formControlName="password"
+        placeholder="Enter your password"
+      />
+    </div>
+    <div class="form-group">
+      <label for="confirm">Confirm Password</label>
+      <input
+        type="password"
+        name="confirm"
+        id="confirm"
+        formControlName="confirmpassword"
+        placeholder="Conform your password"
+      />
+    </div>
+    <div class="form-login flex justify-between text-center mt-6">
+      <a
+        [routerLink]="['/']"
+        class="w-1/2 bg-white py-1 rounded-sm hover:font-medium"
+        >Back to home</a
+      >
+      <button
+        type="submit"
+        class="w-1/2 bg-blue-500 text-white py-1 rounded-sm hover:bg-blue-600"
+        (click)="onSubmit()"
+        [disabled]="!registerForm.valid"
+      >
+        Login
+      </button>
+    </div>
+  </form>
+  <a
+    [routerLink]="['/auth/login']"
+    class="block text-center mt-6 hover:font-medium"
+    >Already have an account?Login</a
+  >
+</div>
