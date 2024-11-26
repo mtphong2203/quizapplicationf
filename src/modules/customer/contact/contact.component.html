@@ -1,1 +1,82 @@
-<p>contact works!</p>
+<div class="contact mt-4">
+  <h2 class="text-3xl text-center font-medium">Contact</h2>
+  <div class="contact-direct flex justify-between">
+    <div class="feedback mt-2 w-1/2">
+      <h3 class="text-2xl font-medium">Feedback</h3>
+      <p class="mb-1">
+        Please fill out the form below to send us your message. We will message
+        back to you as soon as possible
+      </p>
+      <form class="form-feedback">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            [(ngModel)]="name"
+            placeholder="Enter your name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            [(ngModel)]="email"
+            placeholder="Enter your email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            name="message"
+            id="message"
+            rows="4"
+            placeholder="Enter your message"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="py-2 px-4 text-white bg-blue-500 rounded-md"
+        >
+          Send
+        </button>
+      </form>
+    </div>
+    <div class="infomation mt-2">
+      <h3 class="text-2xl font-medium">Infomation</h3>
+      <p class="mb-2">
+        We wil always be here to help you. These are some ways to contact us
+      </p>
+      <p class="flex gap-1 mb-2">
+        <fa-icon [icon]="faEmail"></fa-icon>
+        <span class="text-gray-500">tienphong2203&#64;mail.com</span>
+      </p>
+      <p class="flex gap-1 mb-2">
+        <fa-icon [icon]="faPhone"></fa-icon>
+        <span class="text-gray-500">+84 966 466 456</span>
+      </p>
+      <p class="flex gap-1 mb-2">
+        <fa-icon [icon]="faMap"></fa-icon>
+        <span class="text-gray-500">456 Quốc Oai, Hà Nội</span>
+      </p>
+      <p class="flex items-center gap-4 text-3xl">
+        <a href="https://facebook.com"
+          ><fa-icon [icon]="faceBookIcon"></fa-icon>
+        </a>
+        <a href="https://youtube.com">
+          <fa-icon [icon]="youtubeIcon"></fa-icon>
+        </a>
+        <a href="https://tiktok.com">
+          <fa-icon [icon]="tiktokIcon"></fa-icon>
+        </a>
+        <a href="https://linkedin.com">
+          <fa-icon [icon]="linkedinIcon"></fa-icon>
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
