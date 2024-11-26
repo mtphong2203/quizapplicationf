@@ -7,14 +7,18 @@
         Please fill out the form below to send us your message. We will message
         back to you as soon as possible
       </p>
-      <form class="form-feedback">
+      <form
+        class="form-feedback"
+        [formGroup]="feedBack"
+        (ngSubmit)="onSubmit()"
+      >
         <div class="form-group">
           <label for="name">Name</label>
           <input
             type="text"
             name="name"
             id="name"
-            [(ngModel)]="name"
+            formControlName="name"
             placeholder="Enter your name"
           />
         </div>
@@ -24,7 +28,7 @@
             type="email"
             name="email"
             id="email"
-            [(ngModel)]="email"
+            formControlName="email"
             placeholder="Enter your email"
           />
         </div>
@@ -34,6 +38,7 @@
             name="message"
             id="message"
             rows="4"
+            formControlName="message"
             placeholder="Enter your message"
           ></textarea>
         </div>
@@ -41,6 +46,7 @@
         <button
           type="submit"
           class="py-2 px-4 text-white bg-blue-500 rounded-md"
+          [disabled]="!feedBack.valid"
         >
           Send
         </button>
