@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
+import { QuizService } from '../services/quiz.service';
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
+  providers: [QuizService],
   imports: [
     CommonModule, RouterModule.forChild(routes)
   ]
