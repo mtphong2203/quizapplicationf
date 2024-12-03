@@ -1,0 +1,57 @@
+<div class="role-detail border-2 border-slate-400 mt-4 rounded-md">
+  <h2 class="text-2xl font-medium p-2 border-b-2">Add Role</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row flex justify-between gap-4 p-2">
+      <div class="form-group w-[50%]">
+        <label for="name" class="mb-1">Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          id="name"
+          placeholder="Enter name"
+          class="w-full p-1 border border-slate-400 rounded-md"
+        />
+      </div>
+      <div class="form-group w-[50%]">
+        <label for="description" class="mb-1">Description</label>
+        <textarea
+          formControlName="description"
+          id="description"
+          placeholder="Enter description"
+          rows="2"
+          class="resize-none w-full border p-1 border-slate-400 rounded-md"
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="row flex gap-2 border-b-2 px-2">
+      <label for="active" class="mb-1">Active</label>
+      <input
+        type="checkbox"
+        class="scale-125"
+        formControlName="active"
+        id="active"
+      />
+    </div>
+
+    <div class="action flex gap-3 p-2 justify-end">
+      <button
+        (click)="onCancel()"
+        type="submit"
+        title="Edit"
+        class="p-2 bg-gray-300 text-white rounded-md"
+      >
+        <fa-icon [icon]="faCancel"></fa-icon>
+        Cancel
+      </button>
+      <button
+        type="submit"
+        title="Delete"
+        class="p-2 bg-blue-500 text-white rounded-md"
+      >
+        <fa-icon [icon]="faSave"></fa-icon>
+        Save
+      </button>
+    </div>
+  </form>
+</div>
