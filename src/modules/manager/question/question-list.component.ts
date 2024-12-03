@@ -2,32 +2,35 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus, faEdit, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { RoleDetailsComponent } from "./role-details/role-details.component";
+import { faEdit, faTrash, faPlus, IconDefinition, faE } from '@fortawesome/free-solid-svg-icons';
+import { QuestionDetailsComponent } from "./question-details.component";
 
 @Component({
-  selector: 'app-role-list',
+  selector: 'app-question-list',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule, RoleDetailsComponent],
-  templateUrl: './role-list.component.html',
-  styleUrl: './role-list.component.css'
+  imports: [FontAwesomeModule, CommonModule, QuestionDetailsComponent],
+  templateUrl: './question-list.component.html',
+  styleUrl: './question-list.component.css'
 })
-export class RoleListComponent implements OnInit {
-  public apiURL: string = 'http://localhost:8080/api/manager/roles';
+export class QuestionListComponent implements OnInit {
+
+  // api control
+  public apiURL: string = 'http://localhost:8080/api/manager/questions';
   public dataApi: any[] = [];
 
-  public selectedItem: any;
-
-  // boolean
   public isShow: boolean = false;
   public isEdit: boolean = false;
 
-  public faPlus: IconDefinition = faPlus;
+  public selectedItem: any;
+
+  // icon
   public faEdit: IconDefinition = faEdit;
   public faTrash: IconDefinition = faTrash;
+  public faPlus: IconDefinition = faPlus;
 
+  constructor(private http: HttpClient) {
 
-  constructor(private http: HttpClient) { }
+  }
   ngOnInit(): void {
     this.search();
   }
@@ -44,23 +47,25 @@ export class RoleListComponent implements OnInit {
   }
 
   public onEdit(id: string): void {
-    this.isShow = true;
     this.isEdit = true;
+    this.isShow = true;
     this.selectedItem = this.dataApi.find((item) => item.id === id);
   }
 
   public onDelete(id: string): void {
     this.http.delete(`${this.apiURL}/${id}`).subscribe((result) => {
       if (result) {
-        console.log('Delete Success');
+        console.log('Delete success!');
       }
       this.search();
-    })
+    });
   }
 
   public onCancelDetail(): void {
     this.isShow = false;
     this.search();
   }
+
+
 
 }
