@@ -1,0 +1,114 @@
+<div class="role-detail border-2 border-slate-400 mt-4 rounded-md">
+  <h2 class="text-2xl font-medium p-2 border-b-2">
+    {{ isEdit ? "Edit" : "Create" }} Role
+  </h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row flex justify-between gap-4 p-2">
+      <div class="form-group w-[50%]">
+        <label for="firstName" class="mb-1">First Name</label>
+        <input
+          type="text"
+          formControlName="firstName"
+          id="firstName"
+          placeholder="Enter first name"
+          class="w-full p-1 border border-slate-400 rounded-md"
+        />
+      </div>
+      <div class="form-group w-[50%]">
+        <label for="lastName" class="mb-1">Last Name</label>
+        <input
+          type="text"
+          formControlName="lastName"
+          id="lastName"
+          placeholder="Enter last name"
+          class="w-full p-1 border border-slate-400 rounded-md"
+        />
+      </div>
+    </div>
+    <div class="row flex justify-between gap-4 p-2">
+      <div class="form-group w-[50%]">
+        <label for="email" class="mb-1">Email</label>
+        <input
+          type="text"
+          formControlName="email"
+          id="email"
+          placeholder="Enter email"
+          class="w-full p-1 border border-slate-400 rounded-md"
+        />
+      </div>
+      <div class="form-group w-[50%]">
+        <label for="username" class="mb-1">User Name</label>
+        <input
+          type="text"
+          formControlName="username"
+          id="username"
+          placeholder="Enter user name"
+          class="w-full p-1 border border-slate-400 rounded-md"
+        />
+      </div>
+    </div>
+    <div class="row flex justify-between gap-4 p-2">
+      <div class="form-group w-[50%]">
+        <label for="phoneNumber" class="mb-1">Phone Number</label>
+        <input
+          type="text"
+          formControlName="phoneNumber"
+          id="phoneNumber"
+          placeholder="Enter phone number"
+          class="w-full p-1 border border-slate-400 rounded-md"
+        />
+      </div>
+      <div class="form-group w-[50%]">
+        <label for="password" class="mb-1">Password</label>
+        <input
+          type="text"
+          formControlName="password"
+          id="password"
+          placeholder="Enter password"
+          class="w-full p-1 border border-slate-400 rounded-md"
+        />
+      </div>
+    </div>
+    <div class="row flex gap-2 border-b-2 p-2 items-center">
+      <div class="form-group w-[50%]">
+        <label for="thumbnailUrl" class="mb-1">Thumbnail</label>
+        <input
+          type="text"
+          formControlName="thumbnailUrl"
+          id="thumbnailUrl"
+          placeholder="Enter thumbnailUrl"
+          class="w-full p-1 border border-slate-400 rounded-md"
+        />
+      </div>
+      <div class="form-group flex gap-1 mt-6">
+        <label for="active" class="mb-1">Active</label>
+        <input
+          type="checkbox"
+          class="scale-125"
+          formControlName="active"
+          id="active"
+        />
+      </div>
+    </div>
+
+    <div class="action flex gap-3 p-2 justify-end">
+      <button
+        (click)="onCancel()"
+        type="submit"
+        title="Edit"
+        class="p-2 bg-gray-300 text-white rounded-md"
+      >
+        <fa-icon [icon]="faCancel"></fa-icon>
+        Cancel
+      </button>
+      <button
+        type="submit"
+        title="Delete"
+        class="p-2 bg-blue-500 text-white rounded-md"
+      >
+        <fa-icon [icon]="faSave"></fa-icon>
+        Save
+      </button>
+    </div>
+  </form>
+</div>
