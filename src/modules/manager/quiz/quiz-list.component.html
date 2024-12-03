@@ -1,1 +1,56 @@
-<p>quiz-list works!</p>
+<div class="container">
+  <div class="list border-2 border-slate-400 rounded-md">
+    <h1 class="p-1 text-center font-medium text-2xl border-b-2">
+      Question List
+    </h1>
+    <table class="border-collapse w-full text-center">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Duration</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of dataApi; let i = index"
+          [ngClass]="i % 2 === 0 ? 'bg-gray-300' : ''"
+        >
+          <td>{{ i }}</td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.duration }}</td>
+          <td>{{ item.active }}</td>
+          <td>
+            <div class="action flex gap-3 justify-center">
+              <button type="submit" (click)="onEdit(item.id)" title="Edit">
+                <fa-icon [icon]="faEdit" class="text-green-500"></fa-icon>
+              </button>
+              <button type="submit" (click)="onDelete(item.id)" title="Delete">
+                <fa-icon [icon]="faTrash" class="text-red-500"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="p-1 flex justify-end">
+      <button
+        type="button"
+        (click)="onCreate()"
+        class="py-2 px-4 rounded-lg bg-cyan-400 text-white"
+      >
+        <fa-icon [icon]="faPlus" class="mr-1"></fa-icon>Add
+      </button>
+    </div>
+  </div>
+  <app-quiz-details
+    *ngIf="isShow"
+    (cancel)="onCancelDetail()"
+    [selectedItem]="selectedItem"
+    [isEdit]="isEdit"
+  ></app-quiz-details>
+</div>

@@ -20,7 +20,7 @@ const routes: Routes = [
     component: QuestionListComponent
   },
   {
-    path: 'quizs',
+    path: 'quizzes',
     component: QuizListComponent
   }
 ]
