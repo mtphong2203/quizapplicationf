@@ -1,8 +1,10 @@
 <div class="h-screen flex flex-col">
   <app-header></app-header>
-  <main class="grow relative">
-    <app-sidebar></app-sidebar>
-    <router-outlet />
+  <main class="grow relative flex">
+    <app-sidebar class="w-[17%]"></app-sidebar>
+    <div class="w-[83%] p-4 mr-2">
+      <router-outlet />
+    </div>
   </main>
-  <app-footer class="ml-[250px] fixed bottom-0"></app-footer>
+  <app-footer class="ml-[250px]"></app-footer>
 </div>

@@ -13,7 +13,7 @@ import { faEnvelope, faPhone, faMapLocationDot } from '@fortawesome/free-solid-s
 })
 export class FooterComponent {
 
-  public logo: string = './assets/images/logo.png'
+  public logoFooter: string = './assets/images/logo.png';
 
   faEnvelope = faEnvelope;
   faPhone = faPhone;

@@ -11,7 +11,8 @@ export const routes: Routes = [
     },
     {
         path: 'manager',
-        component: ManagementLayoutComponent
+        component: ManagementLayoutComponent,
+        loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule)
     },
     {
         path: '',
