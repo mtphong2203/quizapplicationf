@@ -1,40 +1,45 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faEdit, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { RoleDetailsComponent } from "./role-details/role-details.component";
+import { ROLE_SERVICE } from '../../../constants/injection.constant';
+import { IRoleService } from '../../services/role/role.interface';
+import { TableComponent } from "../../../core/components/table/table.component";
 
 @Component({
   selector: 'app-role-list',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule, RoleDetailsComponent],
+  imports: [FontAwesomeModule, CommonModule, RoleDetailsComponent, TableComponent],
   templateUrl: './role-list.component.html',
   styleUrl: './role-list.component.css'
 })
 export class RoleListComponent implements OnInit {
-  public apiURL: string = 'http://localhost:8080/api/manager/roles';
   public dataApi: any[] = [];
 
   public selectedItem: any;
+
+  public columns: any[] = [
+    { name: 'name', title: 'Name' },
+    { name: 'description', title: 'Description' },
+    { name: 'active', title: 'Active' },
+  ]
 
   // boolean
   public isShow: boolean = false;
   public isEdit: boolean = false;
 
-  public faPlus: IconDefinition = faPlus;
-  public faEdit: IconDefinition = faEdit;
-  public faTrash: IconDefinition = faTrash;
-
-
-  constructor(private http: HttpClient) { }
+  constructor(@Inject(ROLE_SERVICE) private roleService: IRoleService) { }
   ngOnInit(): void {
     this.search();
   }
 
   private search(): void {
-    this.http.get(this.apiURL).subscribe((data: any) => {
-      this.dataApi = data;
+    const param = {
+      keyword: ''
+    }
+    this.roleService.search(param).subscribe((data: any) => {
+      this.dataApi = data.data;
     });
   }
 
@@ -50,7 +55,7 @@ export class RoleListComponent implements OnInit {
   }
 
   public onDelete(id: string): void {
-    this.http.delete(`${this.apiURL}/${id}`).subscribe((result) => {
+    this.roleService.delete(id).subscribe((result) => {
       if (result) {
         console.log('Delete Success');
       }

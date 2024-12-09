@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCancel, faSave, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { ROLE_SERVICE } from '../../../../constants/injection.constant';
+import { IRoleService } from '../../../services/role/role.interface';
 
 @Component({
   selector: 'app-role-details',
@@ -18,12 +20,11 @@ export class RoleDetailsComponent implements OnInit, OnChanges {
   @Input('isEdit') isEdit: any;
 
   public form!: FormGroup;
-  public apiURL: string = 'http://localhost:8080/api/manager/roles';
 
   public faCancel: IconDefinition = faCancel;
   public faSave: IconDefinition = faSave;
 
-  constructor(private http: HttpClient) { }
+  constructor(@Inject(ROLE_SERVICE) private roleService: IRoleService) { }
   ngOnChanges(changes: SimpleChanges): void {
     this.createForm();
     this.patchValue();
@@ -54,7 +55,7 @@ export class RoleDetailsComponent implements OnInit, OnChanges {
 
     const data = this.form.value;
     if (this.isEdit) {
-      this.http.put(`${this.apiURL}/${this.selectedItem.id}`, data).subscribe((result) => {
+      this.roleService.update(this.selectedItem.id, data).subscribe((result) => {
         if (result) {
           console.log(data);
         }
@@ -62,7 +63,7 @@ export class RoleDetailsComponent implements OnInit, OnChanges {
       })
 
     } else {
-      this.http.post(this.apiURL, data).subscribe((result) => {
+      this.roleService.create(data).subscribe((result) => {
         if (result) {
           console.log(data);
         }
