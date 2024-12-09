@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCancel, faSave, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { USER_SERVICE } from '../../../constants/injection.constant';
+import { IUserService } from '../../services/user/user.interface';
 
 @Component({
   selector: 'app-user-details',
@@ -18,12 +20,11 @@ export class UserDetailsComponent implements OnChanges {
   @Input('isEdit') isEdit: any;
 
   public form!: FormGroup;
-  public apiURL: string = 'http://localhost:8080/api/manager/users';
 
   public faCancel: IconDefinition = faCancel;
   public faSave: IconDefinition = faSave;
 
-  constructor(private http: HttpClient) { }
+  constructor(@Inject(USER_SERVICE) private userService: IUserService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.createForm();
@@ -56,14 +57,14 @@ export class UserDetailsComponent implements OnChanges {
 
     const data = this.form.value;
     if (this.isEdit) {
-      this.http.put(`${this.apiURL}/${this.selectedItem.id}`, data).subscribe((result) => {
+      this.userService.update(this.selectedItem.id, data).subscribe((result) => {
         if (result) {
           console.log('Update success!');
         }
         this.cancel.emit();
       });
     } else {
-      this.http.post(this.apiURL, data).subscribe((result) => {
+      this.userService.create(data).subscribe((result) => {
         if (result) {
           console.log('Create success!');
         }

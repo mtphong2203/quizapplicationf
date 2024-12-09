@@ -1,53 +1,13 @@
 <div class="container">
   <div class="list border-2 border-slate-400 rounded-md">
-    <h1 class="p-1 text-center font-medium text-2xl border-b-2">Role List</h1>
-    <table class="border-collapse w-full text-center">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>PhoneNumber</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let item of dataApi; let i = index"
-          [ngClass]="i % 2 === 0 ? 'bg-gray-300' : ''"
-        >
-          <td>{{ i }}</td>
-          <td>{{ item.firstName }}</td>
-          <td>{{ item.lastName }}</td>
-          <td>{{ item.username }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.phoneNumber }}</td>
-          <td>{{ item.active }}</td>
-          <td>
-            <div class="action flex gap-3 justify-center">
-              <button type="submit" (click)="onEdit(item.id)" title="Edit">
-                <fa-icon [icon]="faEdit" class="text-green-500"></fa-icon>
-              </button>
-              <button type="submit" (click)="onDelete(item.id)" title="Delete">
-                <fa-icon [icon]="faTrash" class="text-red-500"></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="p-1 flex justify-end">
-      <button
-        type="button"
-        (click)="onCreate()"
-        class="py-2 px-4 rounded-lg bg-cyan-400 text-white"
-      >
-        <fa-icon [icon]="faPlus" class="mr-1"></fa-icon>Add
-      </button>
-    </div>
+    <h1 class="p-1 text-center font-medium text-2xl border-b-2">User List</h1>
+    <app-table
+      [dataApi]="dataApi"
+      [columns]="columns"
+      (edit)="onEdit($event)"
+      (create)="onCreate()"
+      (delete)="onDelete($event)"
+    ></app-table>
   </div>
   <app-user-details
     *ngIf="isShow"
