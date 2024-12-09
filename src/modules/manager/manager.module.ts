@@ -5,6 +5,9 @@ import { QuizListComponent } from './quiz/quiz-list.component';
 import { RoleListComponent } from './role/role-list.component';
 import { UserListComponent } from './user/user-list.component';
 import { QuestionListComponent } from './question/question-list.component';
+import { ROLE_SERVICE, USER_SERVICE } from '../../constants/injection.constant';
+import { UserService } from '../services/user/user.service';
+import { RoleService } from '../services/role/role.service';
 
 const routes: Routes = [
   {
@@ -22,11 +25,27 @@ const routes: Routes = [
   {
     path: 'quizzes',
     component: QuizListComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'quizzes',
+    pathMatch: 'full'
   }
+
 ]
 
 @NgModule({
   declarations: [],
+  providers: [
+    {
+      provide: USER_SERVICE,
+      useClass: UserService
+    },
+    {
+      provide: ROLE_SERVICE,
+      useClass: RoleService
+    },
+  ],
   imports: [
     CommonModule, RouterModule.forChild(routes)
   ]

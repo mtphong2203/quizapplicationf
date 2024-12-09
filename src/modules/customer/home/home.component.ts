@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { QuizComponent } from "../../common/quiz/quiz.component";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { QuizService } from '../../services/quiz.service';
+import { QuizService } from '../../services/common/quiz.service';
 
 @Component({
   selector: 'app-home',

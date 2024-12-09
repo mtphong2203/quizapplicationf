@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
-import { QuizService } from '../services/quiz.service';
+import { QuizService } from '../services/common/quiz.service';
 
 const routes: Routes = [
   {
