@@ -1,21 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEdit, faTrash, faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { QuizDetailsComponent } from "./quiz-details/quiz-details.component";
+import { TableComponent } from "../../../core/components/table/table.component";
+import { QUIZ_SERVICE } from '../../../constants/injection.constant';
+import { IQuizService } from '../../services/quiz/quiz.interface';
 
 @Component({
   selector: 'app-quiz-list',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, QuizDetailsComponent],
+  imports: [CommonModule, FontAwesomeModule, QuizDetailsComponent, TableComponent],
   templateUrl: './quiz-list.component.html',
   styleUrl: './quiz-list.component.css'
 })
 export class QuizListComponent implements OnInit {
 
-  public apiURL: string = 'http://localhost:8080/api/manager/quizzes';
   public dataApi: any[] = [];
+  public columns: any[] = [
+    { name: 'title', title: 'Title' },
+    { name: 'description', title: 'Description' },
+    { name: 'duration', title: 'Duration' },
+    { name: 'active', title: 'Active' },
+  ]
 
   //boolean
   public isShow: boolean = false;
@@ -23,19 +30,17 @@ export class QuizListComponent implements OnInit {
 
   public selectedItem: any;
 
-  // icon
-  public faEdit: IconDefinition = faEdit;
-  public faTrash: IconDefinition = faTrash;
-  public faPlus: IconDefinition = faPlus;
-
-  constructor(private http: HttpClient) { }
+  constructor(@Inject(QUIZ_SERVICE) private quizService: IQuizService) { }
   ngOnInit(): void {
     this.search();
   }
 
   private search(): void {
-    this.http.get(this.apiURL).subscribe((data: any) => {
-      this.dataApi = data;
+    const param = {
+      keyword: '',
+    }
+    this.quizService.search(param).subscribe((data: any) => {
+      this.dataApi = data.data;
     });
   }
 
@@ -51,7 +56,7 @@ export class QuizListComponent implements OnInit {
   }
 
   public onDelete(id: string): void {
-    this.http.delete(`${this.apiURL}/${id}`).subscribe((result) => {
+    this.quizService.delete(id).subscribe((result) => {
       if (result) {
         console.log('Delete Success!');
       }

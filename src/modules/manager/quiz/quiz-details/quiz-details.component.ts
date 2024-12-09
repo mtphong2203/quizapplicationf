@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCancel, faSave, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { QUIZ_SERVICE } from '../../../../constants/injection.constant';
+import { IQuizService } from '../../../services/quiz/quiz.interface';
 @Component({
   selector: 'app-quiz-details',
   standalone: true,
@@ -16,14 +18,13 @@ export class QuizDetailsComponent implements OnChanges {
   @Input('isEdit') isEdit: any;
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
-  public apiURL: string = 'http://localhost:8080/api/manager/quizzes';
   public form!: FormGroup;
 
   // icon
   public faCancel: IconDefinition = faCancel;
   public faSave: IconDefinition = faSave;
 
-  constructor(private http: HttpClient) { }
+  constructor(@Inject(QUIZ_SERVICE) private quizService: IQuizService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.createForm();
@@ -51,14 +52,14 @@ export class QuizDetailsComponent implements OnChanges {
     }
     const data = this.form.value;
     if (this.isEdit) {
-      this.http.put(`${this.apiURL}/${this.selectedItem.id}`, data).subscribe((result) => {
+      this.quizService.update(this.selectedItem.id, data).subscribe((result) => {
         if (result) {
           console.log('Update success!');
         }
         this.cancel.emit();
       });
     } else {
-      this.http.post(this.apiURL, data).subscribe((result) => {
+      this.quizService.create(data).subscribe((result) => {
         if (result) {
           console.log('Create success!');
         }
