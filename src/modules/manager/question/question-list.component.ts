@@ -1,43 +1,46 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash, faPlus, IconDefinition, faE } from '@fortawesome/free-solid-svg-icons';
 import { QuestionDetailsComponent } from "./question-details.component";
+import { TableComponent } from "../../../core/components/table/table.component";
+import { QUESTION_SERVICE } from '../../../constants/injection.constant';
+import { QuestionService } from '../../services/question/question.service';
 
 @Component({
   selector: 'app-question-list',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule, QuestionDetailsComponent],
+  imports: [FontAwesomeModule, CommonModule, QuestionDetailsComponent, TableComponent],
   templateUrl: './question-list.component.html',
   styleUrl: './question-list.component.css'
 })
 export class QuestionListComponent implements OnInit {
 
   // api control
-  public apiURL: string = 'http://localhost:8080/api/manager/questions';
   public dataApi: any[] = [];
+  public columns: any[] = [
+    { name: 'content', title: 'Content' },
+    { name: 'type', title: 'Type' },
+    { name: 'active', title: 'Active' },
+  ]
 
   public isShow: boolean = false;
   public isEdit: boolean = false;
 
   public selectedItem: any;
 
-  // icon
-  public faEdit: IconDefinition = faEdit;
-  public faTrash: IconDefinition = faTrash;
-  public faPlus: IconDefinition = faPlus;
-
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(@Inject(QUESTION_SERVICE) private questionService: QuestionService) { }
   ngOnInit(): void {
     this.search();
   }
 
   private search(): void {
-    this.http.get(this.apiURL).subscribe((data: any) => {
-      this.dataApi = data;
+    const param = {
+      keyword: '',
+    }
+    this.questionService.search(param).subscribe((data: any) => {
+      this.dataApi = data.data;
     });
   }
 
@@ -53,7 +56,7 @@ export class QuestionListComponent implements OnInit {
   }
 
   public onDelete(id: string): void {
-    this.http.delete(`${this.apiURL}/${id}`).subscribe((result) => {
+    this.questionService.delete(id).subscribe((result) => {
       if (result) {
         console.log('Delete success!');
       }

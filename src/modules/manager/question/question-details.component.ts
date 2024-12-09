@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCancel, faSave, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { QUESTION_SERVICE } from '../../../constants/injection.constant';
+import { QuestionService } from '../../services/question/question.service';
 
 @Component({
   selector: 'app-question-details',
@@ -18,13 +20,12 @@ export class QuestionDetailsComponent implements OnChanges {
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
   public form!: FormGroup;
-  public apiURL: string = 'http://localhost:8080/api/manager/questions';
 
   // icon
   public faCancel: IconDefinition = faCancel;
   public faSave: IconDefinition = faSave;
 
-  constructor(private http: HttpClient) { }
+  constructor(@Inject(QUESTION_SERVICE) private questionService: QuestionService) { }
   ngOnChanges(changes: SimpleChanges): void {
     this.createForm();
     this.patchValue();
@@ -50,14 +51,14 @@ export class QuestionDetailsComponent implements OnChanges {
     }
     const data = this.form.value;
     if (this.isEdit) {
-      this.http.put(`${this.apiURL}/${this.selectedItem.id}`, data).subscribe((result) => {
+      this.questionService.update(this.selectedItem.id, data).subscribe((result) => {
         if (result) {
           console.log('Update success!');
         }
         this.cancel.emit();
       });
     } else {
-      this.http.post(this.apiURL, data).subscribe((result) => {
+      this.questionService.create(data).subscribe((result) => {
         if (result) {
           console.log('Create success!');
         }
