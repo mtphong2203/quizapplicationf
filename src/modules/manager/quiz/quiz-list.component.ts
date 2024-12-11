@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QuizDetailsComponent } from "./quiz-details/quiz-details.component";
 import { TableComponent } from "../../../core/components/table/table.component";
 import { QUIZ_SERVICE } from '../../../constants/injection.constant';
 import { IQuizService } from '../../services/quiz/quiz.interface';
+import { MasterListDtoComponent } from '../master-list-dto/master-list-dto.component';
+import { QuizMasterDto } from '../../../models/quiz/quiz-master-dto.model';
+import { Column } from '../../../models/type/column.model';
+import { ResponseDto } from '../../../models/response-dto.model';
 
 @Component({
   selector: 'app-quiz-list',
@@ -14,23 +17,16 @@ import { IQuizService } from '../../services/quiz/quiz.interface';
   templateUrl: './quiz-list.component.html',
   styleUrl: './quiz-list.component.css'
 })
-export class QuizListComponent implements OnInit {
+export class QuizListComponent extends MasterListDtoComponent<QuizMasterDto> implements OnInit {
 
-  public dataApi: any[] = [];
-  public columns: any[] = [
+  public columns: Column[] = [
     { name: 'title', title: 'Title' },
     { name: 'description', title: 'Description' },
     { name: 'duration', title: 'Duration' },
     { name: 'active', title: 'Active' },
   ]
 
-  //boolean
-  public isShow: boolean = false;
-  public isEdit: boolean = false;
-
-  public selectedItem: any;
-
-  constructor(@Inject(QUIZ_SERVICE) private quizService: IQuizService) { }
+  constructor(@Inject(QUIZ_SERVICE) private quizService: IQuizService) { super() }
   ngOnInit(): void {
     this.search();
   }
@@ -39,7 +35,7 @@ export class QuizListComponent implements OnInit {
     const param = {
       keyword: '',
     }
-    this.quizService.search(param).subscribe((data: any) => {
+    this.quizService.search(param).subscribe((data: ResponseDto<QuizMasterDto>) => {
       this.dataApi = data.data;
     });
   }

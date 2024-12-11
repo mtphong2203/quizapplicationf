@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Inject, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCancel, faSave, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { QUIZ_SERVICE } from '../../../../constants/injection.constant';
 import { IQuizService } from '../../../services/quiz/quiz.interface';
+import { MasterDetailComponent } from '../../master-detail/master-detail.component';
+import { QuizMasterDto } from '../../../../models/quiz/quiz-master-dto.model';
 @Component({
   selector: 'app-quiz-details',
   standalone: true,
@@ -12,19 +12,9 @@ import { IQuizService } from '../../../services/quiz/quiz.interface';
   templateUrl: './quiz-details.component.html',
   styleUrl: './quiz-details.component.css'
 })
-export class QuizDetailsComponent implements OnChanges {
+export class QuizDetailsComponent extends MasterDetailComponent<QuizMasterDto> implements OnChanges {
 
-  @Input('selectedItem') selectedItem: any;
-  @Input('isEdit') isEdit: any;
-  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
-
-  public form!: FormGroup;
-
-  // icon
-  public faCancel: IconDefinition = faCancel;
-  public faSave: IconDefinition = faSave;
-
-  constructor(@Inject(QUIZ_SERVICE) private quizService: IQuizService) { }
+  constructor(@Inject(QUIZ_SERVICE) private quizService: IQuizService) { super() }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.createForm();
@@ -41,7 +31,7 @@ export class QuizDetailsComponent implements OnChanges {
   }
 
   private patchValue(): void {
-    if (this.isEdit) {
+    if (this.isEdit && this.selectedItem) {
       this.form.patchValue(this.selectedItem);
     }
   }
@@ -51,22 +41,21 @@ export class QuizDetailsComponent implements OnChanges {
       return;
     }
     const data = this.form.value;
-    if (this.isEdit) {
-      this.quizService.update(this.selectedItem.id, data).subscribe((result) => {
+    if (this.isEdit && this.selectedItem) {
+      this.quizService.update(this.selectedItem.id, data).subscribe((result: QuizMasterDto) => {
         if (result) {
           console.log('Update success!');
         }
         this.cancel.emit();
       });
     } else {
-      this.quizService.create(data).subscribe((result) => {
+      this.quizService.create(data).subscribe((result: QuizMasterDto) => {
         if (result) {
           console.log('Create success!');
         }
         this.cancel.emit();
       });
     }
-
   }
 
   public onCancel(): void {
