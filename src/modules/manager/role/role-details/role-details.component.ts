@@ -5,6 +5,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCancel, faSave, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { ROLE_SERVICE } from '../../../../constants/injection.constant';
 import { IRoleService } from '../../../services/role/role.interface';
+import { MasterDetailComponent } from '../../master-detail/master-detail.component';
+import { RoleMasterDto } from '../../../../models/role/role-master-dto.model';
 
 @Component({
   selector: 'app-role-details',
@@ -13,32 +15,19 @@ import { IRoleService } from '../../../services/role/role.interface';
   templateUrl: './role-details.component.html',
   styleUrl: './role-details.component.css'
 })
-export class RoleDetailsComponent implements OnInit, OnChanges {
+export class RoleDetailsComponent extends MasterDetailComponent<RoleMasterDto> implements OnChanges {
 
-  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
-  @Input('selectedItem') selectedItem: any;
-  @Input('isEdit') isEdit: any;
-
-  public form!: FormGroup;
-
-  public faCancel: IconDefinition = faCancel;
-  public faSave: IconDefinition = faSave;
-
-  constructor(@Inject(ROLE_SERVICE) private roleService: IRoleService) { }
+  constructor(@Inject(ROLE_SERVICE) private roleService: IRoleService) { super() }
   ngOnChanges(changes: SimpleChanges): void {
     this.createForm();
     this.patchValue();
   }
-  ngOnInit(): void {
-  }
 
   private patchValue(): void {
-    if (this.isEdit) {
+    if (this.isEdit && this.selectedItem) {
       this.form.patchValue(this.selectedItem);
     }
   }
-
-
 
   private createForm(): void {
     this.form = new FormGroup({
@@ -54,8 +43,8 @@ export class RoleDetailsComponent implements OnInit, OnChanges {
     }
 
     const data = this.form.value;
-    if (this.isEdit) {
-      this.roleService.update(this.selectedItem.id, data).subscribe((result) => {
+    if (this.isEdit && this.selectedItem) {
+      this.roleService.update(this.selectedItem.id, data).subscribe((result: RoleMasterDto) => {
         if (result) {
           console.log(data);
         }
@@ -63,7 +52,7 @@ export class RoleDetailsComponent implements OnInit, OnChanges {
       })
 
     } else {
-      this.roleService.create(data).subscribe((result) => {
+      this.roleService.create(data).subscribe((result: RoleMasterDto) => {
         if (result) {
           console.log(data);
         }

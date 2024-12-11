@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus, faEdit, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { RoleDetailsComponent } from "./role-details/role-details.component";
 import { ROLE_SERVICE } from '../../../constants/injection.constant';
 import { IRoleService } from '../../services/role/role.interface';
 import { TableComponent } from "../../../core/components/table/table.component";
+import { Column } from '../../../models/type/column.model';
+import { MasterListDtoComponent } from '../master-list-dto/master-list-dto.component';
+import { RoleMasterDto } from '../../../models/role/role-master-dto.model';
+import { ResponseDto } from '../../../models/response-dto.model';
 
 @Component({
   selector: 'app-role-list',
@@ -14,22 +17,15 @@ import { TableComponent } from "../../../core/components/table/table.component";
   templateUrl: './role-list.component.html',
   styleUrl: './role-list.component.css'
 })
-export class RoleListComponent implements OnInit {
-  public dataApi: any[] = [];
+export class RoleListComponent extends MasterListDtoComponent<RoleMasterDto> implements OnInit {
 
-  public selectedItem: any;
-
-  public columns: any[] = [
+  public columns: Column[] = [
     { name: 'name', title: 'Name' },
     { name: 'description', title: 'Description' },
     { name: 'active', title: 'Active' },
   ]
 
-  // boolean
-  public isShow: boolean = false;
-  public isEdit: boolean = false;
-
-  constructor(@Inject(ROLE_SERVICE) private roleService: IRoleService) { }
+  constructor(@Inject(ROLE_SERVICE) private roleService: IRoleService) { super() }
   ngOnInit(): void {
     this.search();
   }
@@ -38,7 +34,7 @@ export class RoleListComponent implements OnInit {
     const param = {
       keyword: ''
     }
-    this.roleService.search(param).subscribe((data: any) => {
+    this.roleService.search(param).subscribe((data: ResponseDto<RoleMasterDto>) => {
       this.dataApi = data.data;
     });
   }
