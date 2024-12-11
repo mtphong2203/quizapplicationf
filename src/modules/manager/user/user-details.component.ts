@@ -5,6 +5,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCancel, faSave, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { USER_SERVICE } from '../../../constants/injection.constant';
 import { IUserService } from '../../services/user/user.interface';
+import { MasterDetailComponent } from '../master-detail/master-detail.component';
+import { UserMasterDto } from '../../../models/user/user-master-dto.model';
 
 @Component({
   selector: 'app-user-details',
@@ -13,18 +15,9 @@ import { IUserService } from '../../services/user/user.interface';
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.css'
 })
-export class UserDetailsComponent implements OnChanges {
+export class UserDetailsComponent extends MasterDetailComponent<UserMasterDto> implements OnChanges {
 
-  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
-  @Input('selectedItem') selectedItem: any;
-  @Input('isEdit') isEdit: any;
-
-  public form!: FormGroup;
-
-  public faCancel: IconDefinition = faCancel;
-  public faSave: IconDefinition = faSave;
-
-  constructor(@Inject(USER_SERVICE) private userService: IUserService) { }
+  constructor(@Inject(USER_SERVICE) private userService: IUserService) { super() }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.createForm();
@@ -45,7 +38,7 @@ export class UserDetailsComponent implements OnChanges {
   }
 
   private patchValue(): void {
-    if (this.isEdit) {
+    if (this.isEdit && this.selectedItem) {
       this.form.patchValue(this.selectedItem);
     }
   }
@@ -56,15 +49,15 @@ export class UserDetailsComponent implements OnChanges {
     }
 
     const data = this.form.value;
-    if (this.isEdit) {
-      this.userService.update(this.selectedItem.id, data).subscribe((result) => {
+    if (this.isEdit && this.selectedItem) {
+      this.userService.update(this.selectedItem.id, data).subscribe((result: UserMasterDto) => {
         if (result) {
           console.log('Update success!');
         }
         this.cancel.emit();
       });
     } else {
-      this.userService.create(data).subscribe((result) => {
+      this.userService.create(data).subscribe((result: UserMasterDto) => {
         if (result) {
           console.log('Create success!');
         }

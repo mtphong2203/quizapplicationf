@@ -7,6 +7,10 @@ import { UserDetailsComponent } from "./user-details.component";
 import { USER_SERVICE } from '../../../constants/injection.constant';
 import { IUserService } from '../../services/user/user.interface';
 import { TableComponent } from "../../../core/components/table/table.component";
+import { Column } from '../../../models/type/column.model';
+import { MasterListDtoComponent } from '../master-list-dto/master-list-dto.component';
+import { UserMasterDto } from '../../../models/user/user-master-dto.model';
+import { ResponseDto } from '../../../models/response-dto.model';
 
 @Component({
   selector: 'app-user-list',
@@ -15,10 +19,9 @@ import { TableComponent } from "../../../core/components/table/table.component";
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent extends MasterListDtoComponent<UserMasterDto> implements OnInit {
 
-  public dataApi: any[] = [];
-  public columns: any[] = [
+  public columns: Column[] = [
     { name: 'firstName', title: 'First Name' },
     { name: 'lastName', title: 'Last Name' },
     { name: 'username', title: 'Username' },
@@ -28,12 +31,7 @@ export class UserListComponent implements OnInit {
     { name: 'active', title: 'Active' },
   ]
 
-  public selectedItem: any;
-
-  public isShow: boolean = false;
-  public isEdit: boolean = false;
-
-  constructor(@Inject(USER_SERVICE) private userService: IUserService) { }
+  constructor(@Inject(USER_SERVICE) private userService: IUserService) { super() }
   ngOnInit(): void {
     this.search();
   }
@@ -42,7 +40,7 @@ export class UserListComponent implements OnInit {
     const param = {
       keyword: '',
     }
-    this.userService.search(param).subscribe((data: any) => {
+    this.userService.search(param).subscribe((data: ResponseDto<UserMasterDto>) => {
       this.dataApi = data.data;
     });
   }
@@ -59,7 +57,7 @@ export class UserListComponent implements OnInit {
   }
 
   public onDelete(id: string): void {
-    this.userService.delete(id).subscribe((result) => {
+    this.userService.delete(id).subscribe((result: boolean) => {
       if (result) {
         console.log('Delete success!');
       }
