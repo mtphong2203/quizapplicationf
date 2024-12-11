@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AUTH_SERVICE } from '../../../constants/injection.constant';
+import { IAuthService } from '../../services/auth/auth.interface';
+import { RegisterRequest } from '../../../models/auth/register-request.model';
 
 @Component({
   selector: 'app-register',
@@ -9,27 +12,36 @@ import { RouterModule } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
-  public registerForm: FormGroup;
+  public registerForm!: FormGroup;
 
-  /**
-   *
-   */
-  constructor() {
+  constructor(@Inject(AUTH_SERVICE) private authService: IAuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.createForm();
+  }
+
+  private createForm(): void {
     this.registerForm = new FormGroup({
-      firstname: new FormControl('', Validators.maxLength(20)),
-      lastname: new FormControl('', Validators.maxLength(20)),
+      firstName: new FormControl('', Validators.maxLength(20)),
+      lastName: new FormControl('', Validators.maxLength(20)),
       email: new FormControl('', Validators.required),
       username: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.maxLength(10)),
+      phoneNumber: new FormControl('', Validators.maxLength(10)),
+      thumbnailUrl: new FormControl('', Validators.maxLength(255)),
       password: new FormControl('', Validators.required),
-      confirmpassword: new FormControl('', Validators.required)
+      confirmPassword: new FormControl('', Validators.required)
     });
   }
 
   public onSubmit(): void {
-    console.log(this.registerForm.value);
+    this.authService.register(this.registerForm.value).subscribe((result: RegisterRequest) => {
+      if (result) {
+        console.log(result.id);
+        this.router.navigate(['/auth/login']);
+      }
+    });
   }
 
 }
