@@ -1,5 +1,4 @@
 import { Observable } from "rxjs";
-
 export interface IMasterService {
     getAll(): Observable<any>;
 
@@ -7,9 +6,9 @@ export interface IMasterService {
 
     search(param: any): Observable<any>;
 
-    create(param: any): Observable<any>;
+    create(param: string): Observable<any>;
 
-    update(id: string, param: any): Observable<any>;
+    update(id: string, param: string): Observable<any>;
 
     delete(id: string): Observable<any>;
 }

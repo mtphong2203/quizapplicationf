@@ -12,7 +12,7 @@
         <li class="nav-item">
           <a [routerLink]="['/quizzes']" class="nav-link">Quizzes</a>
         </li>
-        <li class="nav-item" *ngIf="currentPage != ''">
+        <li class="nav-item" *ngIf="isManager">
           <a [routerLink]="['/manager']" class="nav-link">Management</a>
         </li>
         <li class="nav-item">
@@ -23,11 +23,11 @@
         </li>
       </ul>
     </nav>
-    <div class="profile flex" *ngIf="currentPage == ''">
+    <div class="profile flex" *ngIf="!isAuthenticated">
       <a [routerLink]="['/auth/login']" class="nav-link">Login</a>
       <a [routerLink]="['/auth/register']" class="nav-link">Register</a>
     </div>
-    <div class="user-login" *ngIf="currentPage != ''">
+    <div class="user-login" *ngIf="isAuthenticated">
       <a [routerLink]="['/user']">
         <img [src]="logoUser" class="w-8 h-8" alt="Logo User" />
       </a>

@@ -26,12 +26,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  providers: [
-    {
-      provide: AUTH_SERVICE,
-      useClass: AuthService
-    },
-  ],
   imports: [
     CommonModule, RouterModule.forChild(routes)
   ]

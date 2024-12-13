@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
+import { AUTH_SERVICE } from '../../../constants/injection.constant';
+import { IAuthService } from '../../services/auth/auth.interface';
 
 @Component({
   selector: 'app-header',
@@ -12,23 +14,25 @@ import { filter } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
-  public currentPage: string = '';
-
   public logo: string = './assets/images/logo.png';
   public logoUser: string = './assets/images/avatar-5.png';
 
-  /**
-   *
-   */
-  constructor(private router: Router) { }
+  public isAuthenticated: boolean = false;
+  public isManager: boolean = false;
+
+  constructor(private router: Router, @Inject(AUTH_SERVICE) private authService: IAuthService) { }
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-        this.currentPage = event.urlAfterRedirects.split('/')[1];
-      });
-    this.currentPage = this.router.url.split('/')[1];
+    this.checkAuthenticated();
   }
 
+  public checkAuthenticated(): void {
+    if (this.authService.isAuthenticated()) {
+      this.isAuthenticated = true;
+      if (this.authService.isManager()) {
+        this.isManager = true;
+      }
+    }
+  }
 
 }

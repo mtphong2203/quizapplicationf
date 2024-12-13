@@ -21,10 +21,10 @@ export class MasterService extends BaseService implements IMasterService {
     search(param: any): Observable<any> {
         return this.httpClient.get(`${this.baseUrl}/search`, { params: param });
     }
-    create(param: any): Observable<any> {
+    create(param: string): Observable<any> {
         return this.httpClient.post(this.baseUrl, param);
     }
-    update(id: string, param: any): Observable<any> {
+    update(id: string, param: string): Observable<any> {
         return this.httpClient.put(`${this.baseUrl}/${id}`, param);
     }
     delete(id: string): Observable<any> {
