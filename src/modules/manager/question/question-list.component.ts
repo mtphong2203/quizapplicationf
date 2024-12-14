@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { QuestionDetailsComponent } from "./question-details.component";
+import { QuestionDetailsComponent } from "./question-details/question-details.component";
 import { TableComponent } from "../../../core/components/table/table.component";
 import { QUESTION_SERVICE } from '../../../constants/injection.constant';
 import { QuestionService } from '../../services/question/question.service';
