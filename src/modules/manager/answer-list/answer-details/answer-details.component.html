@@ -1,0 +1,49 @@
+<div>
+  <h2 class="border-b border-slate-300 text-2xl font-bold">Add Answer</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group my-2">
+      <label for="content mb-1 text-lg">Content</label>
+      <textarea
+        id="content"
+        rows="3"
+        placeholder="Enter your content"
+        formControlName="content"
+        class="w-full border border-slate-300 p-2 rounded-md resize-none"
+      ></textarea>
+    </div>
+    <div class="form-group mb-2 flex gap-24 items-center">
+      <div class="form-item flex gap-2 items-center">
+        <input
+          type="checkbox"
+          formControlName="correct"
+          class="scale-150"
+          id="correct"
+        />
+        <label for="correct">Correct</label>
+      </div>
+      <div class="form-item flex gap-2 items-center">
+        <input
+          type="checkbox"
+          formControlName="active"
+          class="scale-150"
+          id="active"
+        />
+        <label for="active">Active</label>
+      </div>
+    </div>
+    <div class="form-group flex justify-end gap-4">
+      <button
+        type="button"
+        class="bg-slate-500 text-white p-2 rounded-md"
+        (click)="onCancel()"
+      >
+        <fa-icon [icon]="faCancel"></fa-icon>
+        Cancel
+      </button>
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">
+        <fa-icon [icon]="faSave"></fa-icon>
+        Save
+      </button>
+    </div>
+  </form>
+</div>
