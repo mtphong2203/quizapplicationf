@@ -1,4 +1,4 @@
-import { Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 import { IAuthService } from "./auth.interface";
 import { HttpClient } from "@angular/common/http";
 import { LoginResponse } from "../../../models/auth/login-response.model";
@@ -12,12 +12,29 @@ export class AuthService implements IAuthService {
     public apiUrl: string = 'http://localhost:8080/api/manager/auth';
     private accessToken!: string;
 
+    private authenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+    public authenticated$ = this.authenticated.asObservable();
+
+    private userInformation: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
+    public userInformation$ = this.userInformation.asObservable();
+
     constructor(private http: HttpClient) {
         this.accessToken = localStorage.getItem('accessToken') || '';
+        this.authenticated.next(!!this.accessToken);
+        const userInformationRaw = localStorage.getItem('userInformation');
+        if (userInformationRaw) {
+            this.userInformation.next(JSON.parse(userInformationRaw));
+        }
     }
 
-    public isAuthenticated(): boolean {
-        return !!this.accessToken;
+    public isAuthenticated(): Observable<boolean> {
+        return this.authenticated$;
+    }
+
+    public getUserInformation(): Observable<any> {
+        return this.userInformation$;
     }
 
     public isManager(): boolean {
@@ -37,6 +54,13 @@ export class AuthService implements IAuthService {
         return this.accessToken;
     }
 
+    public logout(): void {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userInformation');
+        this.authenticated.next(false);
+        this.userInformation.next(null);
+    }
+
     login(param: string): Observable<LoginResponse> {
         return this.http.post<LoginResponse>(`${this.apiUrl}/login`, param).pipe(
             tap((result: any) => {
@@ -46,6 +70,8 @@ export class AuthService implements IAuthService {
                     const userInformation = JSON.stringify(result.userInformationDTO);
                     localStorage.setItem('userInformation', userInformation);
                 }
+                this.authenticated.next(true);
+                this.userInformation.next(result.userInformationDTO);
             })
         );
     }

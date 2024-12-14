@@ -12,27 +12,32 @@ import { IAuthService } from '../../services/auth/auth.interface';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   public logo: string = './assets/images/logo.png';
   public logoUser: string = './assets/images/avatar-5.png';
 
   public isAuthenticated: boolean = false;
-  public isManager: boolean = false;
+  public userInformation: any;
+  public isShow: boolean = false;
 
-  constructor(private router: Router, @Inject(AUTH_SERVICE) private authService: IAuthService) { }
+  constructor(private router: Router, @Inject(AUTH_SERVICE) private authService: IAuthService) {
+    this.authService.isAuthenticated().subscribe(res => {
+      this.isAuthenticated = res;
+    });
 
-  ngOnInit(): void {
-    this.checkAuthenticated();
+    this.authService.getUserInformation().subscribe(res => {
+      this.userInformation = res;
+    })
   }
 
-  public checkAuthenticated(): void {
-    if (this.authService.isAuthenticated()) {
-      this.isAuthenticated = true;
-      if (this.authService.isManager()) {
-        this.isManager = true;
-      }
-    }
+  public logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
+
+  public isShowDetail(): void {
+    this.isShow = !this.isShow;
   }
 
 }

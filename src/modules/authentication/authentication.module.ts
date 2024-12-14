@@ -5,11 +5,13 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AUTH_SERVICE } from '../../constants/injection.constant';
 import { AuthService } from '../services/auth/auth.service';
+import { authAnonymous } from '../../guards/auth.anonymous';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [authAnonymous]
   },
   {
     path: 'register',

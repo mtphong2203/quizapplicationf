@@ -3,6 +3,7 @@ import { IPermissionService } from "./permission.interface";
 import { AUTH_SERVICE } from "../../../constants/injection.constant";
 import { IAuthService } from "../auth/auth.interface";
 import { Router } from "@angular/router";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +11,16 @@ import { Router } from "@angular/router";
 export class PermissionService implements IPermissionService {
 
     constructor(@Inject(AUTH_SERVICE) private authService: IAuthService, private router: Router) { }
+
+    isUnauthenticated(): boolean {
+        this.authService.isAuthenticated().subscribe((res) => {
+            if (res) {
+                return false;
+            }
+            return true;
+        });
+        return true;
+    }
 
     canActivate(): boolean {
         if (this.authService.isAuthenticated()) {

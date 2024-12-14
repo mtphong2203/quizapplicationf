@@ -12,7 +12,7 @@
         <li class="nav-item">
           <a [routerLink]="['/quizzes']" class="nav-link">Quizzes</a>
         </li>
-        <li class="nav-item" *ngIf="isManager">
+        <li class="nav-item" *ngIf="isAuthenticated">
           <a [routerLink]="['/manager']" class="nav-link">Management</a>
         </li>
         <li class="nav-item">
@@ -23,14 +23,46 @@
         </li>
       </ul>
     </nav>
-    <div class="profile flex" *ngIf="!isAuthenticated">
-      <a [routerLink]="['/auth/login']" class="nav-link">Login</a>
-      <a [routerLink]="['/auth/register']" class="nav-link">Register</a>
-    </div>
-    <div class="user-login" *ngIf="isAuthenticated">
-      <a [routerLink]="['/user']">
-        <img [src]="logoUser" class="w-8 h-8" alt="Logo User" />
-      </a>
-    </div>
+    <!-- Profile Menu -->
+    <ul class="profile-menu flex">
+      <ng-container *ngIf="!isAuthenticated; else authenticated">
+        <ng-container *ngTemplateOutlet="notAuthenticated"></ng-container>
+      </ng-container>
+    </ul>
   </div>
 </header>
+
+<ng-template #notAuthenticated>
+  <ul class="flex">
+    <li class="nav-item">
+      <a [routerLink]="['/auth/login']" class="nav-link">Login</a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/auth/register']" class="nav-link">Register</a>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #authenticated>
+  <div class="relative">
+    <img
+      [src]="logoUser"
+      class="w-10 h-10"
+      alt="Logo User"
+      (click)="isShowDetail()"
+    />
+    <ul
+      class="absolute top-full left-0 translate-x-[-50%] bg-slate-100 mt-1 shadow-md w-[120px] h-auto z-10"
+      *ngIf="isShow"
+    >
+      <li class="nav-item border-b border-slate-300 p-1 font-light">
+        <a [routerLink]="['/profile']" class="nav-link">{{
+          userInformation.displayName
+        }}</a>
+      </li>
+      <li class="nav-item p-1 cursor-pointer font-light">
+        <a (click)="logout()" class="nav-link">Logout</a>
+      </li>
+    </ul>
+  </div>
+</ng-template>
