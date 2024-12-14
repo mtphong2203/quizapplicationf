@@ -5,11 +5,12 @@ import { QuizListComponent } from './quiz/quiz-list.component';
 import { RoleListComponent } from './role/role-list.component';
 import { UserListComponent } from './user/user-list.component';
 import { QuestionListComponent } from './question/question-list.component';
-import { QUESTION_SERVICE, QUIZ_SERVICE, ROLE_SERVICE, USER_SERVICE } from '../../constants/injection.constant';
+import { ANSWER_SERVICE, QUESTION_SERVICE, QUIZ_SERVICE, ROLE_SERVICE, USER_SERVICE } from '../../constants/injection.constant';
 import { UserService } from '../services/user/user.service';
 import { RoleService } from '../services/role/role.service';
 import { QuestionService } from '../services/question/question.service';
 import { QuizService } from '../services/quiz/quiz.service';
+import { AnswerService } from '../services/answers/answer.service';
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
     {
       provide: QUIZ_SERVICE,
       useClass: QuizService
+    },
+    {
+      provide: ANSWER_SERVICE,
+      useClass: AnswerService
     },
   ],
   imports: [
