@@ -9,6 +9,7 @@ import { MasterListDtoComponent } from '../master-list-dto/master-list-dto.compo
 import { QuizMasterDto } from '../../../models/quiz/quiz-master-dto.model';
 import { Column } from '../../../models/type/column.model';
 import { ResponseDto } from '../../../models/response-dto.model';
+import { QuestionListComponent } from "../question/question-list.component";
 
 @Component({
   selector: 'app-quiz-list',

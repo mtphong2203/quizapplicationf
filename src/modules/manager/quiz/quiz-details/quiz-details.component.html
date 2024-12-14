@@ -47,24 +47,40 @@
       </div>
     </div>
 
-    <div class="action flex gap-3 p-2 justify-end">
+    <div class="action flex items-center justify-between">
       <button
-        (click)="onCancel()"
-        type="submit"
-        title="Edit"
-        class="p-2 bg-gray-300 text-white rounded-md"
+        type="button"
+        (click)="onShowQuestion()"
+        class="ml-2 bg-blue-500 p-2 rounded-md text-white"
       >
-        <fa-icon [icon]="faCancel"></fa-icon>
-        Cancel
+        <fa-icon [icon]="faPlus"></fa-icon>
+        Show Questions
       </button>
-      <button
-        type="submit"
-        title="Delete"
-        class="p-2 bg-blue-500 text-white rounded-md"
-      >
-        <fa-icon [icon]="faSave"></fa-icon>
-        Save
-      </button>
+      <div class="flex gap-3 p-2 justify-end">
+        <button
+          (click)="onCancel()"
+          type="submit"
+          title="Edit"
+          class="p-2 bg-gray-300 text-white rounded-md"
+        >
+          <fa-icon [icon]="faCancel"></fa-icon>
+          Cancel
+        </button>
+        <button
+          type="submit"
+          title="Delete"
+          class="p-2 bg-blue-500 text-white rounded-md"
+        >
+          <fa-icon [icon]="faSave"></fa-icon>
+          Save
+        </button>
+      </div>
     </div>
   </form>
+</div>
+
+<div class="mt-6" *ngIf="isShowQuestion">
+  <ng-container>
+    <app-question-list></app-question-list>
+  </ng-container>
 </div>

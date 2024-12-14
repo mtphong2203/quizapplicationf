@@ -5,14 +5,20 @@ import { QUIZ_SERVICE } from '../../../../constants/injection.constant';
 import { IQuizService } from '../../../services/quiz/quiz.interface';
 import { MasterDetailComponent } from '../../master-detail/master-detail.component';
 import { QuizMasterDto } from '../../../../models/quiz/quiz-master-dto.model';
+import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { QuestionListComponent } from "../../question/question-list.component";
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-quiz-details',
   standalone: true,
-  imports: [ReactiveFormsModule, FontAwesomeModule],
+  imports: [ReactiveFormsModule, FontAwesomeModule, CommonModule, QuestionListComponent],
   templateUrl: './quiz-details.component.html',
   styleUrl: './quiz-details.component.css'
 })
 export class QuizDetailsComponent extends MasterDetailComponent<QuizMasterDto> implements OnChanges {
+
+  public faPlus: IconDefinition = faPlus;
+  public isShowQuestion: boolean = false;
 
   constructor(@Inject(QUIZ_SERVICE) private quizService: IQuizService) { super() }
 
@@ -60,6 +66,10 @@ export class QuizDetailsComponent extends MasterDetailComponent<QuizMasterDto> i
 
   public onCancel(): void {
     this.cancel.emit();
+  }
+
+  public onShowQuestion(): void {
+    this.isShowQuestion = true;
   }
 
 }
