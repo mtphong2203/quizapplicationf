@@ -6,11 +6,16 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
 import { QuizService } from '../services/common/common.service';
+import { UserProfileComponent } from './user/user-profile.component';
 
 const routes: Routes = [
   {
     path: 'quizzes',
     component: QuizzesComponent
+  },
+  {
+    path: 'profile',
+    component: UserProfileComponent
   },
   {
     path: 'contact',
